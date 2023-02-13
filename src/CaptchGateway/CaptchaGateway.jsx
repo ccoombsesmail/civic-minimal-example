@@ -4,7 +4,8 @@
 import React, { useEffect } from 'react'
 import { clusterApiUrl, PublicKey, Connection } from '@solana/web3.js'
 import {
-  GatewayProvider, useGateway,
+    Badge,
+    GatewayProvider, useGateway,
 } from '@civic/solana-gateway-react'
 import { useWallet } from '@solana/wallet-adapter-react'
 
@@ -67,16 +68,19 @@ export function CaptchaGatewayDesktop() {
   const conn = new Connection(clusterApiUrl('devnet'), 'processed')
   if (!conn || !publicKey) return null
   return (
+      <>
+          <Badge gatekeeperNetwork={gatekeeperNetwork} publicKey={publicKey} connection={conn}/>
     <GatewayProvider
       connection={conn}
       wallet={wallet}
       gatekeeperNetwork={gatekeeperNetwork}
       cluster={cluster}
       options={{
-        autoShowModal: true,
+        autoShowModal: false,
       }}
     >
       <RequestGatewayTokenDesktop />
     </GatewayProvider>
+          </>
   )
 }

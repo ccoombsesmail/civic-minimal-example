@@ -1,6 +1,7 @@
 import React, {
   memo,
   useMemo,
+    useEffect,
 } from 'react'
 
 import {
@@ -18,7 +19,6 @@ import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-r
 import { CaptchaGatewayDesktop } from './CaptchGateway/CaptchaGateway';
 import styled from 'styled-components'
 import { CaptchaGatewayDesktopUnique } from './UniquenessGateway/UniquenessGateway';
-
 
 const Container = styled('div')`
   width: 100vw;
@@ -42,6 +42,12 @@ export function App() {
     ],
     [network],
   )
+    useEffect(() => {
+    window.addEventListener('message', (e) => {
+        console.log('got message', e)
+    })
+    }, [])
+
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider
@@ -52,7 +58,7 @@ export function App() {
           <Container >
             <WalletMultiButton />
             <CaptchaGatewayDesktop />
-            {/* <CaptchaGatewayDesktopUnique /> */}
+             <CaptchaGatewayDesktopUnique />
           </Container>
            
         </WalletModalProvider>
